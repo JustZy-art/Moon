@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Scrollable Image</title>
+    <title>Responsive Scrollable Image with Popup</title>
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            overflow: hidden; /* Hide body overflow to prevent scrollbars */
+            overflow: hidden;
         }
         .image-container {
-            height: 100vh; /* Full viewport height */
-            width: 100vw;  /* Full viewport width */
-            overflow: auto; /* Allow scrolling */
+            height: 100vh;
+            width: 100vw;
+            overflow: auto;
             position: relative;
             display: flex;
             align-items: center;
@@ -24,17 +24,17 @@
         .image-container img {
             display: block;
             position: absolute;
-            max-width: 100%; /* Ensure the image width does not exceed viewport width */
+            max-width: 100%;
             height: auto;
-            max-height: none; /* Allow the height to be larger than viewport height */
+            max-height: none;
         }
 
         /* Mobile version */
         @media (max-width: 767px) {
             .image-container img.mobile {
-                width: 100vw; /* Fit the width of the viewport */
-                height: auto; /* Allow height to be adjusted by aspect ratio */
-                object-fit: contain; /* Ensure image is contained within the viewport */
+                width: 100vw;
+                height: auto;
+                object-fit: contain;
                 top: 0;
                 left: 0;
             }
@@ -46,9 +46,9 @@
         /* Desktop version */
         @media (min-width: 768px) {
             .image-container img.desktop {
-                width: 100vw; /* Fit the width of the viewport */
-                height: auto; /* Adjust height according to aspect ratio */
-                max-height: none; /* Allow height to exceed viewport height if needed */
+                width: 100vw;
+                height: auto;
+                max-height: none;
                 top: 0;
                 left: 0;
             }
@@ -57,30 +57,38 @@
             }
         }
 
-        /* Popup container style */
-        .popup {
+        /* Cat ears positioning */
+        .cat-ears {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            width: 100px; /* Adjust the size of the cat ears */
+            height: auto;
+        }
+
+        /* Popup image styling */
+        .popup-container {
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 90vw; /* Max width of the popup relative to viewport */
-            max-height: 90vh; /* Max height of the popup relative to viewport */
-            overflow: auto; /* Enable scrolling if the content exceeds the popup size */
+            width: 90vw;
+            height: 90vh;
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 9999;
-            background-color: rgba(0, 0, 0, 0.8); /* Dark background */
         }
-
-        /* Popup image style */
-        .popup img {
+        .popup-container img {
             width: 100%;
             height: auto;
+            max-height: 100%;
         }
-
-        /* Close button for popup */
-        .close-btn {
+        .popup-close {
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 20px;
             color: white;
             font-size: 24px;
             cursor: pointer;
@@ -89,35 +97,38 @@
     </style>
 </head>
 <body>
+
     <div class="image-container">
+        <!-- The main image for desktop and mobile -->
         <img src="desktopimage.png" alt="Desktop Image" class="desktop">
         <img src="mobileimage.png" alt="Mobile Image" class="mobile">
 
-        <!-- Cat ears image -->
-        <img id="catEars" src="catears.png" alt="Cat Ears" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); cursor: pointer;">
+        <!-- Cat ears that can be clicked -->
+        <img src="catears.png" alt="Cat Ears" class="cat-ears" id="catEars">
+    </div>
 
-        <!-- Popup container (hidden by default) -->
-        <div id="popup" class="popup" style="display: none;">
-            <span class="close-btn" id="closePopup">&times;</span>
-            <img src="new_image.jpg" alt="Popup Image">
-        </div>
+    <!-- Popup container -->
+    <div class="popup-container" id="popupContainer">
+        <span class="popup-close" id="popupClose">&times;</span>
+        <img src="popupimage.jpg" alt="Popup Image">
     </div>
 
     <script>
-        // Get the cat ears element and popup
+        // Get elements
         const catEars = document.getElementById('catEars');
-        const popup = document.getElementById('popup');
-        const closePopup = document.getElementById('closePopup');
+        const popupContainer = document.getElementById('popupContainer');
+        const popupClose = document.getElementById('popupClose');
 
-        // Add click event to the cat ears to show the popup
+        // Add click event listener to the cat ears
         catEars.addEventListener('click', function() {
-            popup.style.display = 'block'; // Show the popup
+            popupContainer.style.display = 'block';
         });
 
-        // Add click event to the close button to hide the popup
-        closePopup.addEventListener('click', function() {
-            popup.style.display = 'none'; // Hide the popup
+        // Add click event listener to the close button
+        popupClose.addEventListener('click', function() {
+            popupContainer.style.display = 'none';
         });
     </script>
+
 </body>
 </html>
